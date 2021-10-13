@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PESCUIALĂ</title>
+</head>
+
+<body>
+    <div>
+        <ul>
+            {% if balti_list %}
+            {% for balta in balti_list %}
+            <a href="{% url 'balti:detail' balta.name %}">
+                <li>{{balta.name}} - {{balta.avg_reviews}}</li>
+            </a>
+            {% endfor %}
+            {% else %}
+            <p>Nu exista balti disponibile</p>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+<h1>{{ balta }}</h1>
+<ul>
+    {% for recenzie in balta.recenzie_set.all %}
+    <li>{{ recenzie.title }} - {{ recenzie.stars }}</li>
+    {% endfor %}
+</ul>
