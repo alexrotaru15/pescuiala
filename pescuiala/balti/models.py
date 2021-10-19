@@ -17,9 +17,9 @@ class Balta(models.Model):
 
 
 class Recenzie(models.Model):
-    stars = models.IntegerField(default=1)
-    title = models.CharField(max_length=30)
-    review = models.CharField(max_length=250)
+    stars = models.IntegerField(verbose_name="Nota")
+    title = models.CharField(verbose_name="Titlu", max_length=30)
+    review = models.CharField(verbose_name="Recenzie", max_length=250)
     balta = models.ForeignKey(Balta, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
