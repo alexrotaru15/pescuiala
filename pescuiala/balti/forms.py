@@ -1,15 +1,36 @@
 from django import forms
+from django.forms import widgets
+from django.utils.translation import gettext_lazy as _
 from .models import Recenzie
 
 
 class ReviewForm(forms.ModelForm):
-    # stars = forms.IntegerField(label="Nota", min_value=1, max_value=5)
-    # title = forms.CharField(label="Titlu", max_length=50)
-    # review = forms.CharField(label="Recenzie")
-
     class Meta:
         model = Recenzie
         fields = ['stars', 'title', 'review']
+
+        # labels = {
+        #     'stars': _('writer')
+        # }
+        # help_texts = {
+        #     'stars': _('nr de stele')
+        # }
+        error_messages = {
+            'title': {
+                'max_length': ('Puteti introduce maxim 30 de caractere.')
+            },
+            'stars': {
+                'min_value': ('Introduceti o valoare intre 1 si 5'),
+                'max_value': ('Introduceti o valoare intre 1 si 5')
+            }
+        }
+
+        widgets = {
+            'review': widgets.Textarea(attrs={
+                'cols': 50,
+                'rows': 5
+            }),
+        }
 
 
 # class Recenzie(models.Model):

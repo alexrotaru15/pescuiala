@@ -1,27 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PESCUIALĂ</title>
-</head>
-
-<body>
-    <div>
-        <ul>
-            {% if balti_list %}
-            {% for balta in balti_list %}
-            <a href="{% url 'balti:detail' balta.name %}">
-                <li>{{balta.name}} - {{balta.avg_reviews}}</li>
-            </a>
-            {% endfor %}
-            {% else %}
-            <p>Nu exista balti disponibile</p>
-            {% endif %}
-        </ul>
+{% extends "balti/base.html" %}
+{% block title %}
+PESCUIALĂ
+{% endblock title %}
+{% block content %}
+<h1>Toate Bălțile</h1>
+<div class="row">
+    <div class="col-sm-2">
+        <h2>Filtre</h2>
+        <div>
+            <form action="{% url 'balti:home' %}" method="get">
+                {% csrf_token %}
+                {% for judet in judete %}
+                <p>
+                    {% if judet.id in checked_balti %}
+                    <input class="filter-judete" type="checkbox" value="{{judet}}" id="id_{{judet}}" name="{{judet.id}}"
+                        checked>
+                    {% else %}
+                    <input class="filter-judete" type="checkbox" value="{{judet}}" id="id_{{judet}}"
+                        name="{{judet.id}}">
+                    {% endif %}
+                    <label for="id_{{judet}}">{{ judet }}</label>
+                </p>
+                {% endfor %}
+                <input type="submit" class="btn btn-success" value="Filtrează">
+                <button onclick="removeChecked()" class="btn btn-warning" id="remove-filters">Scoate filtre</button>
+            </form>
+        </div>
     </div>
-</body>
-
-</html>
+    <div class="col-sm-10 row align-items-stretch">
+        {% for balta in balti_list %}
+        <div class="col">
+            <div class="card mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ balta.name }}</h5>
+                    <p class="card-text">medie recenzii {{ balta.avg_reviews }}</p>
+                    <p class="card-text">{{ balta.details|truncatechars:30 }}</p>
+                    <a href="{% url 'balti:detail' balta_name=balta.name %}" class="btn btn-success">Vezi balta</a>
+                    <a href="{{ balta.map_page }}" target="_blank" class="btn btn-secondary">Deschide harta</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
