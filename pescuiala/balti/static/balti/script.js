@@ -1,5 +1,3 @@
-const button = document.getElementById('remove-filters');
-
 removeChecked = () => {
     const filters = document.getElementsByClassName('filter-judete');
     console.log(filters);

@@ -33,6 +33,16 @@ class ReviewForm(forms.ModelForm):
         }
 
 
+class SortForm(forms.Form):
+    choices = [
+        ('alfa_order_a_z', 'alfabetic a-z'),
+        ('alfa_order_z_a', 'alfabetic z-a'),
+        ('nota_sus', 'cea mai mare notă'),
+        ('nota_jos', 'cea mai mică notă')
+    ]
+    option1 = forms.ChoiceField(choices=choices, label="Sortează")
+
+
 # class Recenzie(models.Model):
 #     stars = models.IntegerField(default=1)
 #     title = models.CharField(max_length=30)

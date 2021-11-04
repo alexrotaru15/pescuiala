@@ -3,36 +3,37 @@
 PESCUIALĂ
 {% endblock title %}
 {% block content %}
-<h1>Toate Bălțile</h1>
-<div class="row">
-    <div class="col-sm-2">
+<div class="row mt-4">
+    <div class="col-sm-4 col-md-2">
         <h2>Filtre</h2>
         <div>
             <form action="{% url 'balti:home' %}" method="get">
-                {% csrf_token %}
                 {% for judet in judete %}
                 <p>
                     {% if judet.id in checked_balti %}
-                    <input class="filter-judete" type="checkbox" value="{{judet}}" id="id_{{judet}}" name="{{judet.id}}"
+                    <input class="filter-judete" type="checkbox" value="{{judet}}" id="id_{{judet}}" name="judete"
                         checked>
                     {% else %}
-                    <input class="filter-judete" type="checkbox" value="{{judet}}" id="id_{{judet}}"
-                        name="{{judet.id}}">
+                    <input class="filter-judete" type="checkbox" value="{{judet}}" id="id_{{judet}}" name="judete">
                     {% endif %}
                     <label for="id_{{judet}}">{{ judet }}</label>
                 </p>
                 {% endfor %}
-                <input type="submit" class="btn btn-success" value="Filtrează">
-                <button onclick="removeChecked()" class="btn btn-warning" id="remove-filters">Scoate filtre</button>
+                {{ choice_field }}
+                <input type="submit" class="btn btn-success mt-2" value="Filtrează">
+                <button name="scoate" value="true" onclick="removeChecked()" class="mt-2 btn btn-warning"
+                    id="remove-filters">Scoate
+                    filtre</button>
             </form>
         </div>
     </div>
-    <div class="col-sm-10 row align-items-stretch">
+    <div class="col-sm-8 col-md-10 row align-items-stretch">
         {% for balta in balti_list %}
         <div class="col">
             <div class="card mb-3" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">{{ balta.name }}</h5>
+                    <p class="card-text">{{ balta.location }}, {{ balta.county }}</p>
                     <p class="card-text">medie recenzii {{ balta.avg_reviews }}</p>
                     <p class="card-text">{{ balta.details|truncatechars:30 }}</p>
                     <a href="{% url 'balti:detail' balta_name=balta.name %}" class="btn btn-success">Vezi balta</a>
